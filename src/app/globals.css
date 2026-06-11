@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* Bakery Color Palette */
+@theme {
+  --color-cream-50: #FFFDF7;
+  --color-cream-100: #FFF9E6;
+  --color-cream-200: #FFF3CC;
+  --color-cream-300: #FFE8A3;
+  --color-cream-400: #FFD666;
+  --color-cream-500: #FFC933;
+
+  --color-chocolate-50: #FAF6F3;
+  --color-chocolate-100: #F2E8DC;
+  --color-chocolate-200: #E3CDB3;
+  --color-chocolate-300: #D4AE86;
+  --color-chocolate-400: #C48B59;
+  --color-chocolate-500: #8B5E3C;
+  --color-chocolate-600: #6B3F22;
+  --color-chocolate-700: #4A2812;
+  --color-chocolate-800: #2D1709;
+  --color-chocolate-900: #1A0D04;
+
+  --color-gold-50: #FFFDF5;
+  --color-gold-100: #FFF8E1;
+  --color-gold-200: #FFECB3;
+  --color-gold-300: #FFD54F;
+  --color-gold-400: #FFC107;
+  --color-gold-500: #D4A017;
+
+  --color-rose-50: #FFF5F7;
+  --color-rose-100: #FFE4E8;
+  --color-rose-200: #FFCCD5;
+  --color-rose-300: #FFB3C1;
+  --color-rose-400: #FF8FA3;
+  --color-rose-500: #E8A0B4;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+/* Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream-50);
+    color: var(--color-chocolate-700);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Custom Container */
+@layer components {
+  .container-custom {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-custom {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-custom {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+}

@@ -51,8 +51,8 @@ export default function AdminDashboard() {
         hours: hours || [], contact: contact || {}, testimonials: testimonials || [],
         gallery: gallery || [],
         about: {
-          story_title: "How It All Started",
-          story_text: "Sweet Delights Bakery started in a small home kitchen with one simple belief: everyone deserves cake that tastes as good as it looks.",
+          story_title: hero?.story_title || "How It All Started",
+          story_text: hero?.story_text || "Sweet Delights Bakery started in a small home kitchen with one simple belief: everyone deserves cake that tastes as good as it looks.",
           founder_image_url: hero?.founder_image_url || "",
           kitchen_image_url: hero?.kitchen_image_url || "",
         },
@@ -64,10 +64,20 @@ export default function AdminDashboard() {
   const handleSave = async () => {
     setSaved(false);
     try {
+      const heroData = {
+        ...editData.hero,
+        story_title: editData.about.story_title,
+        story_text: editData.about.story_text,
+        founder_image_url: editData.about.founder_image_url,
+        kitchen_image_url: editData.about.kitchen_image_url,
+      };
       await Promise.all([
-        saveProducts(editData.products), saveHero({ ...editData.hero, founder_image_url: editData.about.founder_image_url, kitchen_image_url: editData.about.kitchen_image_url }),
-        saveAnnouncement(editData.announcement), saveHours(editData.hours),
-        saveTestimonials(editData.testimonials), saveContact(editData.contact),
+        saveProducts(editData.products),
+        saveHero(heroData),
+        saveAnnouncement(editData.announcement),
+        saveHours(editData.hours),
+        saveTestimonials(editData.testimonials),
+        saveContact(editData.contact),
         saveGallery(editData.gallery),
       ]);
       setSaved(true);
@@ -147,7 +157,6 @@ export default function AdminDashboard() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="flex items-center justify-between px-3 md:px-6 h-14 md:h-16">
           <div className="flex items-center gap-2 md:gap-3">
@@ -168,10 +177,8 @@ export default function AdminDashboard() {
       </div>
 
       <div className="flex relative">
-        {/* Mobile overlay */}
         {sidebarOpen && <div className="md:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setSidebarOpen(false)} />}
 
-        {/* Sidebar */}
         <div className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 fixed md:sticky top-14 md:top-16 left-0 z-40 w-56 bg-white border-r border-gray-200 h-[calc(100vh-56px)] md:h-[calc(100vh-64px)] p-3 transition-transform duration-200 overflow-y-auto`}>
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -184,7 +191,6 @@ export default function AdminDashboard() {
           })}
         </div>
 
-        {/* Content */}
         <div className="flex-1 p-3 md:p-6 w-full overflow-x-hidden">
           {/* PRODUCTS */}
           {activeTab === "products" && (
@@ -193,37 +199,38 @@ export default function AdminDashboard() {
                 <h2 className="text-lg md:text-xl font-bold text-chocolate-700">Products</h2>
                 <button onClick={addProduct} className="flex items-center gap-1 md:gap-2 bg-chocolate-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-chocolate-700"><Plus size={14} /> Add</button>
               </div>
-              <div className="space-y-2 md:space-y-3">
+              <div className="space-y-3 md:space-y-4">
                 {editData.products.map((product, index) => (
-                  <div key={index} className="bg-white rounded-xl p-3 md:p-4 border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                    <div className="flex items-center gap-3 w-full sm:w-auto">
-                      <div className="w-12 h-12 md:w-16 md:h-16 bg-cream-100 rounded-lg flex-shrink-0 overflow-hidden relative">
-                        {product.image_url ? <img src={product.image_url} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-chocolate-300"><Cake size={20} /></div>}
+                  <div key={index} className="bg-white rounded-xl p-3 md:p-4 border border-gray-200">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {/* Image */}
+                      <div className="w-full sm:w-20 h-20 bg-cream-100 rounded-lg flex-shrink-0 overflow-hidden relative">
+                        {product.image_url ? <img src={product.image_url} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-chocolate-300"><Cake size={24} /></div>}
                         <label className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-                          <Upload size={12} className="text-white" />
+                          <Upload size={14} className="text-white" />
                           <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "products", index)} />
                         </label>
                       </div>
-                      <div className="flex-1 min-w-0 sm:hidden">
-                        <input type="text" value={product.name} onChange={(e) => { const u = [...editData.products]; u[index].name = e.target.value; setEditData({ ...editData, products: u }); }} className="w-full font-medium text-chocolate-700 bg-transparent border-none outline-none text-sm" placeholder="Product name" />
-                        <input type="text" value={product.price} onChange={(e) => { const u = [...editData.products]; u[index].price = e.target.value; setEditData({ ...editData, products: u }); }} className="w-full text-xs text-chocolate-400 bg-transparent border-none outline-none" placeholder="Price" />
+                      {/* Fields */}
+                      <div className="flex-1 space-y-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          <input type="text" value={product.name} onChange={(e) => { const u = [...editData.products]; u[index].name = e.target.value; setEditData({ ...editData, products: u }); }} className="font-medium text-chocolate-700 bg-transparent border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-chocolate-400 text-sm" placeholder="Product name" />
+                          <input type="text" value={product.price} onChange={(e) => { const u = [...editData.products]; u[index].price = e.target.value; setEditData({ ...editData, products: u }); }} className="text-chocolate-600 bg-transparent border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-chocolate-400 text-sm" placeholder="Price" />
+                          <select value={product.category} onChange={(e) => { const u = [...editData.products]; u[index].category = e.target.value; setEditData({ ...editData, products: u }); }} className="text-chocolate-500 bg-cream-50 border border-chocolate-200 rounded-lg px-3 py-2 text-sm outline-none">
+                            <option value="cakes">Cakes</option><option value="cupcakes">Cupcakes</option><option value="pastries">Pastries</option><option value="bread">Bread</option><option value="savory">Savory</option><option value="special-orders">Special Orders</option>
+                          </select>
+                        </div>
+                        <textarea value={product.description || ""} onChange={(e) => { const u = [...editData.products]; u[index].description = e.target.value; setEditData({ ...editData, products: u }); }} rows={2} className="w-full text-sm text-chocolate-500 bg-transparent border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-chocolate-400 resize-none" placeholder="Product description" />
+                        <div className="flex items-center justify-between">
+                          <label className="flex items-center gap-2 text-xs text-chocolate-500">
+                            <input type="checkbox" checked={product.featured} onChange={(e) => { const u = [...editData.products]; u[index].featured = e.target.checked; setEditData({ ...editData, products: u }); }} className="rounded" /> Featured
+                          </label>
+                          <label className="flex items-center gap-2 text-xs text-chocolate-500">
+                            <input type="checkbox" checked={product.bestseller} onChange={(e) => { const u = [...editData.products]; u[index].bestseller = e.target.checked; setEditData({ ...editData, products: u }); }} className="rounded" /> Best Seller
+                          </label>
+                          <button onClick={() => deleteProductHandler(index)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 size={14} /></button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="hidden sm:flex flex-1 min-w-0 gap-3 items-center">
-                      <input type="text" value={product.name} onChange={(e) => { const u = [...editData.products]; u[index].name = e.target.value; setEditData({ ...editData, products: u }); }} className="flex-1 font-medium text-chocolate-700 bg-transparent border-none outline-none text-sm" placeholder="Product name" />
-                      <input type="text" value={product.price} onChange={(e) => { const u = [...editData.products]; u[index].price = e.target.value; setEditData({ ...editData, products: u }); }} className="w-32 text-sm text-chocolate-400 bg-transparent border-none outline-none" placeholder="Price" />
-                      <select value={product.category} onChange={(e) => { const u = [...editData.products]; u[index].category = e.target.value; setEditData({ ...editData, products: u }); }} className="text-xs text-chocolate-500 bg-cream-50 border border-chocolate-200 rounded px-2 py-1">
-                        <option value="cakes">Cakes</option><option value="cupcakes">Cupcakes</option><option value="pastries">Pastries</option><option value="bread">Bread</option><option value="savory">Savory</option><option value="special-orders">Special Orders</option>
-                      </select>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
-                      <select value={product.category} onChange={(e) => { const u = [...editData.products]; u[index].category = e.target.value; setEditData({ ...editData, products: u }); }} className="sm:hidden text-xs text-chocolate-500 bg-cream-50 border border-chocolate-200 rounded px-2 py-1">
-                        <option value="cakes">Cakes</option><option value="cupcakes">Cupcakes</option><option value="pastries">Pastries</option><option value="bread">Bread</option><option value="savory">Savory</option><option value="special-orders">Special Orders</option>
-                      </select>
-                      <label className="flex items-center gap-1 text-xs text-chocolate-500">
-                        <input type="checkbox" checked={product.featured} onChange={(e) => { const u = [...editData.products]; u[index].featured = e.target.checked; setEditData({ ...editData, products: u }); }} className="rounded" /> Featured
-                      </label>
-                      <button onClick={() => deleteProductHandler(index)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 size={14} /></button>
                     </div>
                   </div>
                 ))}
@@ -238,13 +245,16 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-chocolate-700 mb-1">Hero Image</label>
-                  <div className="w-full h-32 md:h-40 bg-cream-100 rounded-xl overflow-hidden relative mb-2">
-                    {editData.hero.hero_image_url ? <img src={editData.hero.hero_image_url} alt="Hero" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-chocolate-300">No image</div>}
+                  <div className="w-full h-40 md:h-48 bg-cream-100 rounded-xl overflow-hidden relative mb-2">
+                    {editData.hero.hero_image_url ? <img src={editData.hero.hero_image_url} alt="Hero" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-chocolate-300">No image — click to upload</div>}
                     <label className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-                      <Upload size={20} className="text-white" /><span className="text-white ml-2 font-medium text-sm">Upload</span>
+                      <Upload size={24} className="text-white" /><span className="text-white ml-2 font-medium">Upload New Hero Image</span>
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "hero")} />
                     </label>
                   </div>
+                  {editData.hero.hero_image_url && (
+                    <p className="text-xs text-chocolate-400 truncate">Current: {editData.hero.hero_image_url}</p>
+                  )}
                 </div>
                 <div><label className="block text-sm font-medium text-chocolate-700 mb-1">Headline</label><input type="text" value={editData.hero.headline} onChange={(e) => setEditData({ ...editData, hero: { ...editData.hero, headline: e.target.value } })} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm" /></div>
                 <div><label className="block text-sm font-medium text-chocolate-700 mb-1">Subheadline</label><input type="text" value={editData.hero.subheadline} onChange={(e) => setEditData({ ...editData, hero: { ...editData.hero, subheadline: e.target.value } })} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm" /></div>
@@ -259,14 +269,8 @@ export default function AdminDashboard() {
             <div>
               <h2 className="text-lg md:text-xl font-bold text-chocolate-700 mb-4 md:mb-6">About Page</h2>
               <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-chocolate-700 mb-1">Story Title</label>
-                  <input type="text" value={editData.about.story_title} onChange={(e) => setEditData({ ...editData, about: { ...editData.about, story_title: e.target.value } })} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-chocolate-700 mb-1">Story Text (Bio)</label>
-                  <textarea value={editData.about.story_text} onChange={(e) => setEditData({ ...editData, about: { ...editData.about, story_text: e.target.value } })} rows={6} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm resize-none" />
-                </div>
+                <div><label className="block text-sm font-medium text-chocolate-700 mb-1">Story Title</label><input type="text" value={editData.about.story_title} onChange={(e) => setEditData({ ...editData, about: { ...editData.about, story_title: e.target.value } })} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm" /></div>
+                <div><label className="block text-sm font-medium text-chocolate-700 mb-1">Story Text (Bio)</label><textarea value={editData.about.story_text} onChange={(e) => setEditData({ ...editData, about: { ...editData.about, story_text: e.target.value } })} rows={6} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-chocolate-400 text-sm resize-none" /></div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-chocolate-700 mb-1">Founder Photo</label>

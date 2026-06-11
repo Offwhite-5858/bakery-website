@@ -8,34 +8,42 @@ import { fetchHero } from "@/lib/api";
 import Link from "next/link";
 
 export default function HeroBanner() {
+  const [loading, setLoading] = useState(true);
   const [hero, setHero] = useState({
     headline: "Freshly Baked Cakes, Pastries & Treats Made With Love",
     subheadline: "Custom cakes, daily pastries, and desserts for birthdays, weddings, and special moments.",
-    hero_image_url: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=1920&q=80",
+    hero_image_url: "",
   });
 
   useEffect(() => {
     async function load() {
       const data = await fetchHero();
       if (data) setHero(data);
+      setLoading(false);
     }
     load();
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Background Image - static, no scale animation */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('${hero.hero_image_url || "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=1920&q=80"}')`,
-            backgroundColor: "#2D1709",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-chocolate-900/80 via-chocolate-900/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-cream-50 via-transparent to-transparent" />
-      </div>
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-chocolate-900">
+      {/* Background Image - only show when loaded */}
+      {!loading && hero.hero_image_url && (
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('${hero.hero_image_url}')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-chocolate-900/80 via-chocolate-900/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-cream-50 via-transparent to-transparent" />
+        </div>
+      )}
+
+      {/* Fallback gradient when no image */}
+      {(!hero.hero_image_url || loading) && (
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-chocolate-800 to-chocolate-900" />
+      )}
 
       {/* Content */}
       <div className="container-custom relative z-10 pt-20 pb-10">

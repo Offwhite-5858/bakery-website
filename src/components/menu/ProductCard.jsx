@@ -11,19 +11,19 @@ export default function ProductCard({ product }) {
   const imageUrl = product.image_url || "";
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-chocolate-100/50 hover:border-chocolate-200">
+    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-chocolate-100/50 w-full">
       {/* Product Image */}
-      <div className="relative h-56 sm:h-64 overflow-hidden bg-cream-100">
-        {/* Placeholder skeleton */}
+      <div className="relative w-full aspect-[4/3] overflow-hidden bg-cream-100">
+        {/* Loading skeleton */}
         {!imageLoaded && !imageError && (
-          <div className="absolute inset-0 bg-cream-100 animate-pulse flex items-center justify-center">
+          <div className="absolute inset-0 bg-cream-100 animate-pulse flex items-center justify-center z-10">
             <div className="w-12 h-12 bg-cream-200 rounded-full" />
           </div>
         )}
 
-        {/* Fallback for no image */}
+        {/* No image fallback */}
         {(!imageUrl || imageError) && (
-          <div className="absolute inset-0 bg-cream-100 flex items-center justify-center">
+          <div className="absolute inset-0 bg-cream-100 flex items-center justify-center z-0">
             <span className="text-4xl">🧁</span>
           </div>
         )}
@@ -46,7 +46,7 @@ export default function ProductCard({ product }) {
 
         {/* Bestseller Badge */}
         {product.bestseller && (
-          <div className="absolute top-3 left-3 bg-gold-400 text-chocolate-900 text-xs font-semibold px-3 py-1 rounded-full z-10">
+          <div className="absolute top-3 left-3 bg-gold-400 text-chocolate-900 text-xs font-semibold px-3 py-1 rounded-full z-20">
             Best Seller
           </div>
         )}
@@ -60,11 +60,11 @@ export default function ProductCard({ product }) {
         >
           {product.name}
         </h3>
-        <p className="text-chocolate-400 text-sm mb-3 line-clamp-2">
+        <p className="text-chocolate-400 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
           {product.description}
         </p>
         <div className="flex items-center justify-between">
-          <span className="text-chocolate-600 font-semibold">
+          <span className="text-chocolate-600 font-semibold text-sm">
             {product.price}
           </span>
           <OrderButton productName={product.name} />

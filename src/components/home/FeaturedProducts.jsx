@@ -22,7 +22,7 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 bg-cream-50">
+    <section className="py-16 md:py-24 bg-cream-100">
       <div className="container-custom">
         <FadeIn>
           <div className="text-center mb-12">
@@ -35,7 +35,7 @@ export default function FeaturedProducts() {
             >
               Most Loved Treats
             </h2>
-            <p className="text-chocolate-400 max-w-xl mx-auto">
+            <p className="text-chocolate-500 max-w-xl mx-auto">
               The ones our customers keep coming back for. Freshly baked every single day.
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function FeaturedProducts() {
           <div className="text-center mt-12">
             <Link
               href="/menu"
-              className="inline-flex items-center gap-2 text-chocolate-600 hover:text-chocolate-400 font-medium transition-colors group"
+              className="inline-flex items-center gap-2 text-chocolate-600 hover:text-chocolate-500 font-medium transition-colors group"
             >
               View Full Menu
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />

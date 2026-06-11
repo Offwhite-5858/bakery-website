@@ -24,7 +24,7 @@ export default function CTASection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-chocolate-600 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-chocolate-800 relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       </div>

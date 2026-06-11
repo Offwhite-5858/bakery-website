@@ -1,25 +1,28 @@
 @import "tailwindcss";
 
-/* Bakery Color Palette */
+/* Premium Bakery Color Palette */
 @theme {
+  /* Warm Creams */
   --color-cream-50: #FFFDF7;
-  --color-cream-100: #FFF9E6;
-  --color-cream-200: #FFF3CC;
-  --color-cream-300: #FFE8A3;
-  --color-cream-400: #FFD666;
-  --color-cream-500: #FFC933;
+  --color-cream-100: #FFF8F0;
+  --color-cream-200: #F8F3EB;
+  --color-cream-300: #F0E8D8;
+  --color-cream-400: #E8D7C3;
+  --color-cream-500: #D4C4AB;
 
-  --color-chocolate-50: #FAF6F3;
-  --color-chocolate-100: #F2E8DC;
-  --color-chocolate-200: #E3CDB3;
-  --color-chocolate-300: #D4AE86;
-  --color-chocolate-400: #C48B59;
-  --color-chocolate-500: #8B5E3C;
-  --color-chocolate-600: #6B3F22;
-  --color-chocolate-700: #4A2812;
-  --color-chocolate-800: #2D1709;
-  --color-chocolate-900: #1A0D04;
+  /* Warm Browns */
+  --color-chocolate-50: #F5F0E8;
+  --color-chocolate-100: #E8D7C3;
+  --color-chocolate-200: #D4B896;
+  --color-chocolate-300: #C89B6D;
+  --color-chocolate-400: #B8844E;
+  --color-chocolate-500: #6E4B3A;
+  --color-chocolate-600: #6B4226;
+  --color-chocolate-700: #5A3E2B;
+  --color-chocolate-800: #4A2C20;
+  --color-chocolate-900: #2C1810;
 
+  /* Golden CTA */
   --color-gold-50: #FFFDF5;
   --color-gold-100: #FFF8E1;
   --color-gold-200: #FFECB3;
@@ -27,26 +30,27 @@
   --color-gold-400: #FFC107;
   --color-gold-500: #D4A017;
 
+  /* Soft Rose */
   --color-rose-50: #FFF5F7;
   --color-rose-100: #FFE4E8;
-  --color-rose-200: #FFCCD5;
-  --color-rose-300: #FFB3C1;
-  --color-rose-400: #FF8FA3;
+  --color-rose-200: #F7E4E4;
+  --color-rose-300: #FFCCD5;
+  --color-rose-400: #FFB3C1;
   --color-rose-500: #E8A0B4;
 
+  /* Fonts */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
 }
 
-/* Base Styles */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--color-cream-50);
-    color: var(--color-chocolate-700);
+    background-color: var(--color-cream-200);
+    color: #2C2C2C;
     font-family: var(--font-sans);
   }
 
@@ -55,7 +59,6 @@
   }
 }
 
-/* Custom Container */
 @layer components {
   .container-custom {
     max-width: 80rem;

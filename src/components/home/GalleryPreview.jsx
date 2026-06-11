@@ -21,7 +21,7 @@ export default function GalleryPreview() {
   if (images.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 bg-cream-50">
+    <section className="py-16 md:py-24 bg-cream-200">
       <div className="container-custom">
         <FadeIn>
           <div className="text-center mb-12">
@@ -29,37 +29,35 @@ export default function GalleryPreview() {
             <h2 className="text-3xl md:text-5xl font-bold text-chocolate-600 mt-3 mb-4" style={{ fontFamily: "var(--font-playfair)" }}>
               Fresh From The Oven
             </h2>
-            <p className="text-chocolate-400 max-w-xl mx-auto">
+            <p className="text-chocolate-500 max-w-xl mx-auto">
               Every creation is made with love. Here&apos;s a peek at what we&apos;ve been baking.
             </p>
           </div>
         </FadeIn>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {images.map((image, index) => (
-            <FadeIn key={image.id} delay={index * 0.1}>
-              <div className="group relative aspect-square rounded-2xl overflow-hidden bg-cream-200">
-                <Image
-                  src={image.image_url}
-                  alt={image.alt || "Bakery item"}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-chocolate-900/0 group-hover:bg-chocolate-900/30 transition-all duration-300 flex items-end p-4">
-                  <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {image.category}
-                  </span>
-                </div>
+          {images.map((image) => (
+            <div key={image.id} className="group relative aspect-square rounded-2xl overflow-hidden bg-cream-300">
+              <Image
+                src={image.image_url}
+                alt={image.alt || "Bakery item"}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                sizes="(max-width: 768px) 50vw, 33vw"
+                unoptimized
+              />
+              <div className="absolute inset-0 bg-chocolate-900/0 group-hover:bg-chocolate-900/30 transition-all duration-300 flex items-end p-4">
+                <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {image.category}
+                </span>
               </div>
-            </FadeIn>
+            </div>
           ))}
         </div>
 
         <FadeIn delay={0.4}>
           <div className="text-center mt-10">
-            <Link href="/gallery" className="inline-flex items-center gap-2 text-chocolate-600 hover:text-chocolate-400 font-medium transition-colors group">
+            <Link href="/gallery" className="inline-flex items-center gap-2 text-chocolate-600 hover:text-chocolate-500 font-medium transition-colors group">
               View Full Gallery
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>

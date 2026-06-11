@@ -35,8 +35,8 @@ export default function HeroBanner() {
               backgroundImage: `url('${hero.hero_image_url}')`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-chocolate-900/80 via-chocolate-900/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-cream-50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-cream-200 via-transparent to-transparent" />
         </div>
       )}
 

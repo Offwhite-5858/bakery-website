@@ -18,7 +18,7 @@ export async function fetchHero() {
   return data || {
     headline: "Freshly Baked Cakes, Pastries & Treats Made With Love",
     subheadline: "Custom cakes, daily pastries, and desserts for birthdays, weddings, and special moments.",
-    hero_image_url: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=1920&q=80",
+    hero_image_url: "",
   };
 }
 

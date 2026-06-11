@@ -38,7 +38,7 @@ export default function GalleryPage() {
               className="group relative aspect-square rounded-xl overflow-hidden bg-cream-200 cursor-pointer"
             >
               <Image
-                src={image.image_url || "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&q=80"}
+                src={image.image_url}
                 alt={image.alt || "Gallery image"}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-500"

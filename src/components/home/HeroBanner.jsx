@@ -24,12 +24,8 @@ export default function HeroBanner() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute inset-0 z-0"
-      >
+      {/* Background Image - static, no scale animation */}
+      <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -39,10 +35,12 @@ export default function HeroBanner() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-chocolate-900/80 via-chocolate-900/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-cream-50 via-transparent to-transparent" />
-      </motion.div>
+      </div>
 
+      {/* Content */}
       <div className="container-custom relative z-10 pt-20 pb-10">
         <div className="max-w-2xl">
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -53,6 +51,7 @@ export default function HeroBanner() {
             <span className="text-cream-100 text-sm font-medium">Open for Orders</span>
           </motion.div>
 
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,6 +62,7 @@ export default function HeroBanner() {
             {hero.headline}
           </motion.h1>
 
+          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,6 +72,7 @@ export default function HeroBanner() {
             {hero.subheadline}
           </motion.p>
 
+          {/* Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,6 +94,7 @@ export default function HeroBanner() {
             </Link>
           </motion.div>
 
+          {/* Trust Indicators */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -106,6 +108,7 @@ export default function HeroBanner() {
         </div>
       </div>
 
+      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

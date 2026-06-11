@@ -10,8 +10,8 @@ export default function ProductCard({ product }) {
   const imageUrl = product.image_url || "";
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-chocolate-100/50 w-full">
-      <div className="relative w-full aspect-[4/3] overflow-hidden bg-cream-100">
+    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-chocolate-100/50 w-full transform-gpu">
+      <div className="relative w-full aspect-[4/3] overflow-hidden bg-cream-100 transform-gpu">
         {/* Skeleton loader */}
         {!imageLoaded && (
           <div className="absolute inset-0 bg-cream-100 animate-pulse flex items-center justify-center z-10" />
@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
             src={imageUrl}
             alt={product.name}
             fill
-            className={`object-cover group-hover:scale-105 transition-transform duration-500 ${
+            className={`object-cover ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
